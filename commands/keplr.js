@@ -37,8 +37,7 @@ const keplr = {
   async disconnectWalletFromDapp() {
     await playwright.waitAndClickByText(
       'Disconnect All',
-      playwright.keplrPermissionWindow(),
-      exact = false,
+      playwright.keplrPermissionWindow()
     );
     return true;
   },
