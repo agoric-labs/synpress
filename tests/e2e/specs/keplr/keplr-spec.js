@@ -26,7 +26,7 @@ describe('Keplr', () => {
         expect(taskCompleted).to.be.true;
       });
     });
-    it(`should rejct make an offer transaction`, () => {
+    it(`should reject make an offer transaction`, () => {
       const alertShown = cy.stub().as('alertShown');
       cy.on('window:alert', alertShown);
 
