@@ -1,9 +1,6 @@
 name: E2E (debug)
 
-on:
-  push:
-  pull_request:
-    branches: [master, dev]
+on: [push, pull_request]
 
 concurrency:
   group:
@@ -13,9 +10,6 @@ concurrency:
 
 jobs:
   e2e:
-    if:
-      github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev' ||
-      github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
