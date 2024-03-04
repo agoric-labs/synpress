@@ -9,6 +9,7 @@ let extensionId;
 let extensionVersion;
 let registrationUrl;
 let permissionsUrl;
+let switchBackToCypressWindow;
 
 const keplr = {
   async resetState() {
@@ -71,12 +72,7 @@ const keplr = {
     return true;
   },
   async importWallet(secretWordsOrPrivateKey, password, newAccount) {
-    const keplrWindow = playwright.keplrWindow();
-    const currentUrl = await keplrWindow.url();
-    if (!currentUrl.includes('registr')) {
-      await module.exports.goToRegistration();
-    }
-
+    await module.exports.goToRegistration();
     await playwright.waitAndClickByText(
       newAccount
         ? onboardingElements.createWalletButton

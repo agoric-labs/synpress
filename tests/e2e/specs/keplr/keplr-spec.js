@@ -61,10 +61,8 @@ describe('Keplr', () => {
       });
     });
     it(`should disconnect the wallet from all the connected DAPPs`, () => {
-      cy.switchToExtensionWindow().then(() => {
-        cy.disconnectWalletFromDapp().then(taskCompleted => {
-          expect(taskCompleted).to.be.true;
-        });
+      cy.disconnectWalletFromDapp().then(taskCompleted => {
+        expect(taskCompleted).to.be.true;
       });
     });
   });
