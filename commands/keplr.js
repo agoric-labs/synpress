@@ -225,6 +225,9 @@ const keplr = {
     }
 
     await playwright.assignWindows();
+    if (!playwright.isKeplrWindowActive()) {
+      await playwright.switchToKeplrWindow();
+    }
     await playwright.assignActiveTabName('keplr');
     await module.exports.getExtensionDetails();
     await module.exports.importWallet(

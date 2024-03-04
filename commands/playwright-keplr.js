@@ -34,14 +34,14 @@ module.exports = {
   keplrNotificationWindow() {
     return keplrNotificationWindow;
   },
-  async assignActiveTabName(tabName) {
+  assignActiveTabName(tabName) {
     activeTabName = tabName;
     return true;
   },
-  async isKeplrWindowActive() {
+  isKeplrWindowActive() {
     return activeTabName === 'keplr';
   },
-  async isCypressWindowActive() {
+  isCypressWindowActive() {
     return activeTabName === 'cypress';
   },
   async switchToKeplrWindow() {
