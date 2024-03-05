@@ -233,11 +233,11 @@ const keplr = {
       await playwright.switchToKeplrWindow()
       await module.exports.goToHome()
       const page = await playwright.keplrWindow()
-      await playwright.waitAndClickByText("Copy Address")
-      await page.click('div.sc-dkzDqf div.sc-hKMtZM.sc-kDDrLX.cyoEAq.dkJSBQ');
-      const clipboardText = clipboardy.readSync();
-      console.log('Text from clipboard:', clipboardText);
-      return true
+      await playwright.waitAndClickByText(notificationPageElements.copyAddress)
+      await page.click(notificationPageElements.copyWalletAddressSelector);
+      const walletAddress = clipboardy.readSync();
+      await playwright.switchToCypressWindow()
+      return walletAddress
   },
 
   async initialSetup(
