@@ -35,7 +35,7 @@ const keplr = {
     return {
       registrationUrl,
       permissionsUrl,
-      popupUrl
+      popupUrl,
     };
   },
   async goTo(url) {
@@ -75,7 +75,7 @@ const keplr = {
       extensionVersion,
       registrationUrl,
       permissionsUrl,
-      popupUrl
+      popupUrl,
     };
   },
   async disconnectWalletFromDapp() {
@@ -125,9 +125,10 @@ const keplr = {
       onboardingElements.walletName,
     );
 
-    const passwordFieldExists = await playwright.waitForAndCheckElementExistence(
-      onboardingElements.passwordInput,
-    );
+    const passwordFieldExists =
+      await playwright.waitForAndCheckElementExistence(
+        onboardingElements.passwordInput,
+      );
 
     if (passwordFieldExists) {
       await playwright.waitAndType(onboardingElements.passwordInput, password);
@@ -227,16 +228,16 @@ const keplr = {
     await notificationPage.close();
     return true;
   },
-  
+
   async getWalletAddress() {
-      await playwright.switchToKeplrWindow()
-      await module.exports.goToHome()
-      const page = await playwright.keplrWindow()
-      await playwright.waitAndClickByText(notificationPageElements.copyAddress)
-      await page.click(notificationPageElements.copyWalletAddressSelector);
-      const walletAddress = clipboardy.readSync();
-      await playwright.switchToCypressWindow()
-      return walletAddress
+    await playwright.switchToKeplrWindow();
+    await module.exports.goToHome();
+    const page = await playwright.keplrWindow();
+    await playwright.waitAndClickByText(notificationPageElements.copyAddress);
+    await page.click(notificationPageElements.copyWalletAddressSelector);
+    const walletAddress = clipboardy.readSync();
+    await playwright.switchToCypressWindow();
+    return walletAddress;
   },
 
   async initialSetup(
