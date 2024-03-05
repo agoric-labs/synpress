@@ -4,12 +4,16 @@ const { onboardingElements } = require('../pages/keplr/first-time-flow-page');
 const {
   notificationPageElements,
 } = require('../pages/keplr/notification-page');
+const clipboardy = require('clipboardy');
+
 
 let extensionId;
 let extensionVersion;
 let registrationUrl;
 let permissionsUrl;
+let popupUrl;
 let switchBackToCypressWindow;
+let walletAddress;
 
 const keplr = {
   async resetState() {
@@ -18,6 +22,11 @@ const keplr = {
     extensionVersion = undefined;
     registrationUrl = undefined;
     permissionsUrl = undefined;
+    popupUrl = undefined;
+    walletAddress = undefined;
+  },
+  walletAddress: () => {
+    return walletAddress;
   },
   extensionId: () => {
     return extensionId;
@@ -26,6 +35,7 @@ const keplr = {
     return {
       registrationUrl,
       permissionsUrl,
+      popupUrl
     };
   },
   async goTo(url) {
@@ -41,6 +51,9 @@ const keplr = {
   async goToPermissions() {
     await module.exports.goTo(permissionsUrl);
   },
+  async goToHome() {
+    await module.exports.goTo(popupUrl);
+  },
   async switchToKeplrIfNotActive() {
     if (playwright.isCypressWindowActive()) {
       await playwright.switchToKeplrWindow();
@@ -55,12 +68,14 @@ const keplr = {
     extensionVersion = keplrExtensionData.version;
     registrationUrl = `chrome-extension://${extensionId}/register.html`;
     permissionsUrl = `chrome-extension://${extensionId}/popup.html#/setting/security/permission`;
+    popupUrl = `chrome-extension://${extensionId}/popup.html`;
 
     return {
       extensionId,
       extensionVersion,
       registrationUrl,
       permissionsUrl,
+      popupUrl
     };
   },
   async disconnectWalletFromDapp() {
@@ -212,6 +227,17 @@ const keplr = {
     const notificationPage = await playwright.switchToKeplrNotification();
     await notificationPage.close();
     return true;
+  },
+  
+  async getWalletAddress() {
+      await playwright.switchToKeplrWindow()
+      await module.exports.goToHome()
+      const page = await playwright.keplrWindow()
+      await playwright.waitAndClickByText("Copy Address")
+      await page.click('div.sc-dkzDqf div.sc-hKMtZM.sc-kDDrLX.cyoEAq.dkJSBQ');
+      const clipboardText = clipboardy.readSync();
+      console.log('Text from clipboard:', clipboardText);
+      return true
   },
 
   async initialSetup(

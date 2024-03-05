@@ -452,3 +452,9 @@ Cypress.Commands.add('switchToExtensionWindow', () => {
 Cypress.Commands.add('disconnectWalletFromDapp', () => {
   return cy.task('disconnectWalletFromDapp');
 });
+
+Cypress.Commands.add('getWalletAddress', () => {
+  cy.task('getWalletAddress').then(address => {
+    return address;
+  });
+});

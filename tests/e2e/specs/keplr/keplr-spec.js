@@ -1,4 +1,5 @@
 /* eslint-disable ui-testing/no-disabled-tests */
+
 describe('Keplr', () => {
   context('Test commands', () => {
     it(`should complete Keplr setup by  importing an existing wallet using 24 word phrase`, () => {
@@ -6,6 +7,12 @@ describe('Keplr', () => {
         expect(setupFinished).to.be.true;
       });
       cy.visit('/');
+    });
+
+    it(`should get wallet address`, () => {
+      cy.getWalletAddress().then(setupFinished => {
+        expect(setupFinished).to.be.true;
+      });
     });
     it(`should reject connection with wallet`, () => {
       const alertShown = cy.stub().as('alertShown');
