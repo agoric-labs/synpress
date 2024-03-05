@@ -67,6 +67,7 @@ describe('Keplr', () => {
     it(`should complete Keplr setup by importing the wallet using private key`, () => {
       cy.setupWallet(
         'A9C09B6E4AF70DE1F1B621CB1AA66CFD0B4AA977E4C18497C49132DD9E579485',
+        null,
         false,
         'My wallet 3',
       ).then(setupFinished => {

@@ -250,11 +250,11 @@ const keplr = {
 
   async switchWallet({ walletName }) {
     await module.exports.switchToKeplrIfNotActive();
-    module.exports.goToWalletsPage();
+    await module.exports.goToWalletsPage();
 
     await playwright.waitAndClickByText(
       walletName,
-      await playwright.keplrWindow(),
+      playwright.keplrWindow(),
       true,
     );
     await playwright.switchToCypressWindow();
