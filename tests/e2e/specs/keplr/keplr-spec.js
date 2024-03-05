@@ -76,11 +76,11 @@ describe('Keplr', () => {
         expect(taskCompleted).to.be.true;
       });
     });
-  });
 
-  it(`should get wallet address`, () => {
-    cy.getWalletAddress().then(walletAddress => {
-      expect(walletAddress.length).to.be.equal(45);
+    it(`should get wallet address`, () => {
+      cy.getWalletAddress().then(walletAddress => {
+        expect(walletAddress.length).to.be.equal(45);
+      });
     });
   });
 });
