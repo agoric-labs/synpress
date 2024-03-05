@@ -242,10 +242,10 @@ const keplr = {
   async getWalletAddress() {
     await playwright.switchToKeplrWindow();
     await module.exports.goToHome();
-    const page = await playwright.keplrWindow();
+    const page = playwright.keplrWindow();
     await playwright.waitAndClickByText(notificationPageElements.copyAddress);
     await page.click(notificationPageElements.copyWalletAddressSelector);
-    const walletAddress = clipboardy.readSync();
+    walletAddress = clipboardy.readSync();
     await playwright.switchToCypressWindow();
     return walletAddress;
   },
