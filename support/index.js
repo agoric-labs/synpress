@@ -33,8 +33,6 @@ before(() => {
       case 'keplr':
         cy.setupWallet();
         break;
-      default:
-        throw new Error(`Unknown extension: ${Cypress.env('EXTENSION')}`);
     }
   }
 });
