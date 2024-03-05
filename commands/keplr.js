@@ -158,7 +158,6 @@ const keplr = {
       await playwright.keplrWindow(),
     );
 
-    await playwright.switchToCypressWindow();
     return true;
   },
   async importWalletWithPhrase(secretWords) {
@@ -251,16 +250,14 @@ const keplr = {
     }
 
     await playwright.assignWindows();
-    if (!playwright.isKeplrWindowActive()) {
-      await playwright.switchToKeplrWindow();
-    }
-    playwright.assignActiveTabName('keplr');
+    await playwright.switchToKeplrWindow();
     await module.exports.getExtensionDetails();
     await module.exports.importWallet(
       secretWordsOrPrivateKey,
       password,
       newAccount,
     );
+    await playwright.switchToCypressWindow();
   },
 };
 

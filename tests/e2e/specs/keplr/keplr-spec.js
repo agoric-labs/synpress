@@ -8,12 +8,6 @@ describe('Keplr', () => {
       });
       cy.visit('/');
     });
-
-    it(`should get wallet address`, () => {
-      cy.getWalletAddress().then(setupFinished => {
-        expect(setupFinished).to.be.true;
-      });
-    });
     it(`should reject connection with wallet`, () => {
       const alertShown = cy.stub().as('alertShown');
       cy.on('window:alert', alertShown);
@@ -82,10 +76,11 @@ describe('Keplr', () => {
         expect(taskCompleted).to.be.true;
       });
     });
-    it(`should get wallet address`, () => {
-      cy.getWalletAddress().then(walletAddress => {
-        expect(walletAddress.length).to.be.equal(45);
-      });
+  });
+
+  it(`should get wallet address`, () => {
+    cy.getWalletAddress().then(walletAddress => {
+      expect(walletAddress.length).to.be.equal(45);
     });
   });
 });
