@@ -42,7 +42,7 @@ const keplr = {
     await module.exports.goTo(permissionsUrl);
   },
   async switchToKeplrIfNotActive() {
-    if (await playwright.isCypressWindowActive()) {
+    if (playwright.isCypressWindowActive()) {
       await playwright.switchToKeplrWindow();
       switchBackToCypressWindow = true;
     }
@@ -228,7 +228,7 @@ const keplr = {
     if (!playwright.isKeplrWindowActive()) {
       await playwright.switchToKeplrWindow();
     }
-    await playwright.assignActiveTabName('keplr');
+    playwright.assignActiveTabName('keplr');
     await module.exports.getExtensionDetails();
     await module.exports.importWallet(
       secretWordsOrPrivateKey,
