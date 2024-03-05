@@ -12,6 +12,7 @@ let extensionVersion;
 let registrationUrl;
 let permissionsUrl;
 let popupUrl;
+let walletsPageUrl;
 let switchBackToCypressWindow;
 let walletAddress;
 
@@ -24,9 +25,11 @@ const keplr = {
     permissionsUrl = undefined;
     popupUrl = undefined;
     walletAddress = undefined;
+    walletsPageUrl = undefined;
   },
   walletAddress: () => {
     return walletAddress;
+    
   },
   extensionId: () => {
     return extensionId;
@@ -54,6 +57,9 @@ const keplr = {
   async goToHome() {
     await module.exports.goTo(popupUrl);
   },
+  async goToWalletsPage() {
+    await module.exports.goTo(walletsPageUrl);
+  },
   async switchToKeplrIfNotActive() {
     if (playwright.isCypressWindowActive()) {
       await playwright.switchToKeplrWindow();
@@ -69,6 +75,7 @@ const keplr = {
     registrationUrl = `chrome-extension://${extensionId}/register.html`;
     permissionsUrl = `chrome-extension://${extensionId}/popup.html#/setting/security/permission`;
     popupUrl = `chrome-extension://${extensionId}/popup.html`;
+    walletsPageUrl = `chrome-extension://${extensionId}/popup.html#/wallet/select`;
 
     return {
       extensionId,
@@ -76,6 +83,7 @@ const keplr = {
       registrationUrl,
       permissionsUrl,
       popupUrl,
+      walletsPageUrl,
     };
   },
   async disconnectWalletFromDapp() {
@@ -86,7 +94,12 @@ const keplr = {
     );
     return true;
   },
-  async importWallet(secretWordsOrPrivateKey, password, newAccount) {
+  async importWallet(
+    secretWordsOrPrivateKey,
+    password,
+    newAccount,
+    walletName,
+  ) {
     await module.exports.goToRegistration();
     await playwright.waitAndClickByText(
       newAccount
@@ -120,10 +133,7 @@ const keplr = {
       );
     }
 
-    await playwright.waitAndType(
-      onboardingElements.walletInput,
-      onboardingElements.walletName,
-    );
+    await playwright.waitAndType(onboardingElements.walletInput, walletName);
 
     const passwordFieldExists =
       await playwright.waitForAndCheckElementExistence(
@@ -242,7 +252,7 @@ const keplr = {
 
   async initialSetup(
     playwrightInstance,
-    { secretWordsOrPrivateKey, password, newAccount },
+    { secretWordsOrPrivateKey, password, newAccount, walletName },
   ) {
     if (playwrightInstance) {
       await playwright.init(playwrightInstance);
@@ -257,8 +267,23 @@ const keplr = {
       secretWordsOrPrivateKey,
       password,
       newAccount,
+      walletName,
     );
     await playwright.switchToCypressWindow();
+  },
+
+  async switchWallet({ walletName }) {
+    await module.exports.switchToKeplrIfNotActive();
+    await module.exports.goToWalletsPage();
+
+    await playwright.waitAndClickByText(
+      walletName,
+      playwright.keplrWindow(),
+      true,
+    );
+    await playwright.switchToCypressWindow();
+
+    return true;
   },
 };
 
