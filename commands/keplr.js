@@ -267,10 +267,10 @@ const keplr = {
     return true;
   },
 
-  async getWalletAddress() {
+  async getWalletAddress(chainName) {
     playwright.switchToKeplrWindow();
     await module.exports.goToHome();
-    const newTokensSelctorExists = playwright.waitForAndCheckElementExistence(
+    const newTokensSelctorExists = await playwright.waitForAndCheckElementExistence(
       homePageElements.newTokensFoundSelector,
     );
 
@@ -278,9 +278,9 @@ const keplr = {
       await module.exports.addNewTokensFound(false);
     }
 
-    const page = playwright.keplrWindow();
     await playwright.waitAndClickByText(notificationPageElements.copyAddress);
-    await page.click(notificationPageElements.copyWalletAddressSelector);
+    await playwright.waitAndClick(notificationPageElements.walletSelectors[chainName])
+    
     walletAddress = clipboardy.readSync();
     await playwright.switchToCypressWindow();
     return walletAddress;

@@ -75,6 +75,16 @@ describe('Keplr', () => {
         expect(setupFinished).to.be.true;
       });
     });
+
+    it(`should get wallet address while running addNewTokensFound flow`, () => {
+      cy.getWalletAddress('AGORIC').then(walletAddress => {
+        expect(walletAddress.length).to.be.equal(45);
+      });
+
+      cy.getWalletAddress('COSMOS').then(walletAddress => {
+        expect(walletAddress.length).to.be.equal(45);
+      });
+    });
     it(`should switch to new wallet by name`, () => {
       cy.switchWallet('My Wallet 2').then(taskCompleted => {
         expect(taskCompleted).to.be.true;
@@ -102,8 +112,12 @@ describe('Keplr', () => {
       });
     });
 
-    it(`should get wallet address`, () => {
-      cy.getWalletAddress().then(walletAddress => {
+    it(`should get wallet address without running addNewTokensFound flow`, () => {
+      cy.getWalletAddress('AGORIC').then(walletAddress => {
+        expect(walletAddress.length).to.be.equal(45);
+      });
+
+      cy.getWalletAddress('COSMOS').then(walletAddress => {
         expect(walletAddress.length).to.be.equal(45);
       });
     });
