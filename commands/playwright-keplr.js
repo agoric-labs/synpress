@@ -2,6 +2,7 @@ const log = require('debug')('synpress:playwright');
 const fetch = require('node-fetch');
 const _ = require('underscore');
 const sleep = require('util').promisify(setTimeout);
+const { expect } = require('@playwright/test');
 
 let browser;
 let mainWindow;
@@ -237,6 +238,7 @@ module.exports = {
       page,
       args.number || 0,
     );
+
     if (args.numberOfClicks && !args.waitForEvent) {
       await element.click({
         clickCount: args.numberOfClicks,
@@ -259,7 +261,12 @@ module.exports = {
           element.click({ force: args.force }),
         ]);
       }
+    } else if (args.waitForVisibility) {
+      await expect(element).toBeInViewport();
+      await element.click({ force: args.force });
     } else {
+      await expect(element).toBeInViewport();
+
       await element.click({ force: args.force });
     }
     await module.exports.waitUntilStable();
