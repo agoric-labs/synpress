@@ -272,7 +272,7 @@ const keplr = {
   },
 
   async switchWallet({ walletName }) {
-    const originalURL = (await playwright.keplrWindow()).url();
+    const originalURL = playwright.keplrWindow().url();
     await module.exports.switchToKeplrIfNotActive();
     await module.exports.goToWalletsPage();
 
@@ -294,12 +294,12 @@ const keplr = {
     await playwright.waitAndClickByText(homePageElements.newTokensFound);
     await playwright.waitAndClick(
       homePageElements.selectAllTokensCheck,
-      await playwright.keplrWindow(),
+      playwright.keplrWindow(),
       { number: -1, force: true },
     );
     await playwright.waitAndClickByText(
       homePageElements.addChainsButton,
-      await playwright.keplrWindow(),
+      playwright.keplrWindow(),
       true,
     );
     await playwright.switchToCypressWindow();
@@ -308,7 +308,7 @@ const keplr = {
   },
 
   async getTokenAmount({ tokenName }) {
-    module.exports.switchToKeplrIfNotActive();
+    await module.exports.switchToKeplrIfNotActive();
     await module.exports.goToHome();
 
     const tokenLabel = await playwright.waitFor(
