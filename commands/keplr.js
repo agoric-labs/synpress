@@ -158,10 +158,7 @@ const keplr = {
       await playwright.keplrWindow(),
     );
 
-    await playwright.waitAndClick(
-      onboardingElements.submitChainButton,
-      await playwright.keplrWindow(),
-    );
+    await module.exports.handleSelectChain();
 
     await playwright.waitForByText(
       onboardingElements.phraseAccountCreated,
@@ -169,6 +166,21 @@ const keplr = {
     );
 
     return true;
+  },
+  async handleSelectChain() {
+    const chainNameExists = await playwright.waitForAndCheckElementExistence(onboardingElements.chainNameSelector);
+  
+    if (chainNameExists) {
+      await playwright.waitAndClickByText(onboardingElements.chainName, playwright.keplrWindow());
+      await playwright.waitAndClick(onboardingElements.submitChainButton, playwright.keplrWindow());
+      const importButtonExists = await playwright.waitForAndCheckElementExistence(onboardingElements.importButtonSelector);
+  
+      if (importButtonExists) {
+        await playwright.waitAndClick(onboardingElements.importButtonSelector, playwright.keplrWindow());
+      }
+    } else {
+      await playwright.waitAndClick(onboardingElements.submitChainButton, playwright.keplrWindow());
+    }
   },
   async importWalletWithPhrase(secretWords) {
     await playwright.waitAndClickByText(

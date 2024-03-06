@@ -271,6 +271,7 @@ module.exports = {
     page = keplrWindow,
   ) {
     try {
+      await module.exports.waitUntilStable(page);
       await page.waitForSelector(selector, { timeout });
       return true;
     } catch (error) {

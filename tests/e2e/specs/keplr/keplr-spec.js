@@ -2,18 +2,13 @@
 
 describe('Keplr', () => {
   context('Test commands', () => {
-    it(`should create a new wallet using 24 word phrase`, () => {
-      cy.setupWallet(
-        'orbit bench unit task food shock brand bracket domain regular warfare company announce wheel grape trust sphere boy doctor half guard ritual three ecology',
-        'Test1234',
-        true,
-        'My Wallet 2',
-      ).then(setupFinished => {
+    it(`should complete Keplr setup by  importing an existing wallet using 24 word phrase`, () => {
+      cy.setupWallet().then(setupFinished => {
         expect(setupFinished).to.be.true;
       });
+      cy.visit('/');
     });
     it(`should reject connection with wallet`, () => {
-      cy.visit('/');
       const alertShown = cy.stub().as('alertShown');
       cy.on('window:alert', alertShown);
 
@@ -60,8 +55,13 @@ describe('Keplr', () => {
         'Offer accepted',
       );
     });
-    it(`should complete Keplr setup by importing an existing wallet using 24 word phrase`, () => {
-      cy.setupWallet().then(setupFinished => {
+    it(`should create a new wallet using 24 word phrase`, () => {
+      cy.setupWallet(
+        'orbit bench unit task food shock brand bracket domain regular warfare company announce wheel grape trust sphere boy doctor half guard ritual three ecology',
+        'Test1234',
+        true,
+        'My Wallet 2',
+      ).then(setupFinished => {
         expect(setupFinished).to.be.true;
       });
     });
