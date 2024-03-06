@@ -328,8 +328,9 @@ module.exports = {
     throw new Error(`Failed to click element after ${maxRetries} attempts`);
   },
   async waitAndClickWithDelay(selector, options, delay) {
-    await new Promise(resolve => setTimeout(resolve, delay));
-    await module.exports.waitAndClick(selector, module.exports.keplrWindow(), options);
+    const page = module.exports.keplrWindow()
+    await page.waitForTimeout(delay)
+    await module.exports.waitAndClick(selector, page, options);
   },
   async switchToKeplrNotification() {
     const keplrExtensionData = (await module.exports.getExtensionsData()).keplr;

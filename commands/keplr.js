@@ -279,7 +279,7 @@ const keplr = {
     }
 
     await playwright.waitAndClickByText(notificationPageElements.copyAddress);
-    await playwright.waitAndClick(notificationPageElements.walletSelectors[chainName])
+    await playwright.waitAndClick(notificationPageElements.walletSelectors(chainName))
     
     walletAddress = clipboardy.readSync();
     await playwright.switchToCypressWindow();

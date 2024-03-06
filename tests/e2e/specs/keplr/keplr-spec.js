@@ -77,11 +77,11 @@ describe('Keplr', () => {
     });
 
     it(`should get wallet address while running addNewTokensFound flow`, () => {
-      cy.getWalletAddress('AGORIC').then(walletAddress => {
+      cy.getWalletAddress('Agoric local').then(walletAddress => {
         expect(walletAddress.length).to.be.equal(45);
       });
 
-      cy.getWalletAddress('COSMOS').then(walletAddress => {
+      cy.getWalletAddress('Cosmos Hub').then(walletAddress => {
         expect(walletAddress.length).to.be.equal(45);
       });
     });
@@ -113,11 +113,11 @@ describe('Keplr', () => {
     });
 
     it(`should get wallet address without running addNewTokensFound flow`, () => {
-      cy.getWalletAddress('AGORIC').then(walletAddress => {
+      cy.getWalletAddress('Agoric local').then(walletAddress => {
         expect(walletAddress.length).to.be.equal(45);
       });
 
-      cy.getWalletAddress('COSMOS').then(walletAddress => {
+      cy.getWalletAddress('Cosmos Hub').then(walletAddress => {
         expect(walletAddress.length).to.be.equal(45);
       });
     });
