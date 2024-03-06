@@ -308,6 +308,29 @@ module.exports = {
     await element.type(value);
     await module.exports.waitUntilStable(page);
   },
+  async waitAndClickWithRetry(selector, options) {
+    const maxRetries = 5;
+    let retries = 0;
+
+    while (retries < maxRetries) {
+      try {
+        await module.exports.waitAndClick(
+          selector,
+          module.exports.keplrWindow(),
+          options,
+        );
+        return;
+      } catch (error) {
+        retries++;
+      }
+    }
+
+    throw new Error(`Failed to click element after ${maxRetries} attempts`);
+  },
+  async waitAndClickWithDelay(selector, options, delay) {
+    await new Promise(resolve => setTimeout(resolve, delay));
+    await module.exports.waitAndClick(selector, module.exports.keplrWindow(), options);
+  },
   async switchToKeplrNotification() {
     const keplrExtensionData = (await module.exports.getExtensionsData()).keplr;
 
