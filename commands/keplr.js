@@ -359,9 +359,22 @@ const keplr = {
     );
     const innerTexts = await parentElement.allInnerTexts();
     const textArray = innerTexts[0].split('\n');
-    const tokenValue = Number(textArray[3]);
-    await playwright.switchToCypressWindow();
 
+    let numberString;
+    for (const element of textArray) {
+      const elementWithNoCommas = element.replace(/,/g, '');
+      if (!isNaN(parseFloat(elementWithNoCommas))) {
+        numberString = elementWithNoCommas;
+        break;
+      }
+    }
+
+    if (!numberString) {
+      throw new Error(`Token value for ${tokenName} not found`);
+    }
+
+    let tokenValue = parseFloat(numberString);
+    await playwright.switchToCypressWindow();
     return tokenValue;
   },
 };
