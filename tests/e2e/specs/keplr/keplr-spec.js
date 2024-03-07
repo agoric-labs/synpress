@@ -77,7 +77,7 @@ describe('Keplr', () => {
     });
 
     it(`should get wallet address while running addNewTokensFound flow`, () => {
-      cy.getWalletAddress('Agoric local').then(walletAddress => {
+      cy.getWalletAddress('Agoric localhost').then(walletAddress => {
         expect(walletAddress.length).to.be.equal(45);
       });
 
@@ -110,7 +110,7 @@ describe('Keplr', () => {
     });
 
     it(`should get wallet address without running addNewTokensFound flow`, () => {
-      cy.getWalletAddress('Agoric local').then(walletAddress => {
+      cy.getWalletAddress('Agoric localhost').then(walletAddress => {
         expect(walletAddress.length).to.be.equal(45);
       });
 
