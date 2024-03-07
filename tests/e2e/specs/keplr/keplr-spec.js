@@ -97,13 +97,10 @@ describe('Keplr', () => {
       });
       cy.addNewTokensFound();
       cy.getTokenAmount('ATOM').then(tokenValue => {
-        expect(Number.isFinite(tokenValue)).to.be.true;
+        expect(tokenValue).to.equal(0);
       });
       cy.getTokenAmount('BLD').then(tokenValue => {
-        expect(Number.isFinite(tokenValue)).to.be.true;
-      });
-      cy.getTokenAmount('IST').then(tokenValue => {
-        expect(Number.isFinite(tokenValue)).to.be.true;
+        expect(tokenValue).to.equal(331);
       });
     });
     it(`should disconnect the wallet from all the connected DAPPs`, () => {
