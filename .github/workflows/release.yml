@@ -2,7 +2,7 @@ name: Release CI
 
 on:
   push:
-    branches: [master]
+    branches: [fraz/test-npm]
   workflow_dispatch:
     inputs:
       version:
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # pin@v2
         with:
           fetch-depth: 0
-          ref: master
+          ref: fraz/test-npm
 
       - name: Set pnpm cache directory
         run: pnpm config set store-dir .pnpm-store
