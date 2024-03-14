@@ -89,8 +89,15 @@ module.exports = defineConfig({
 ```
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 use this config by passing the `--configFile` flag to synpress
-```bash
-EXTENSION=keplr synpress run --configFile=test/e2e/synpress.config.js
+```json
+{
+  ...
+  "scripts": {
+    ...
+    "test:e2e": "EXTENSION=keplr synpress run --configFile=test/e2e/synpress.config.js"
+  }
+}
+
 ```
 
 
@@ -99,6 +106,22 @@ EXTENSION=keplr synpress run --configFile=test/e2e/synpress.config.js
 </br>
 
 For an example project, you can take a look at how we've set up tests in this [repository](https://github.com/agoric-labs/synpress/tree/dev/tests/e2e) 
+
+## 📃 Environmental variables
+
+| Variable                | Description                                                                                                                                                                                                 |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `EXTENSION` (Required)          | Picks which extension to use during tests. `keplr` and `metamask` are the only possible values                                                                                                                              |
+| `SECRET_WORDS`          | Space separated words for the test wallet recovery phrase (mnemonic; 12 words)                                                                                                                              |
+| `PRIVATE_KEY`           | Test wallet private key                                                                                                                                                                                     |
+| `SYNDEBUG`              | Set debugging mode to be on                                                                                                                                                                                 |
+| `STABLE_MODE`           | Introduce delay between main actions, 300ms by default (eg `STABLE_MODE=300ms`, `STABLE_MODE=true`)                                                                                                         |
+| `SLOW_MODE`             | Introduce delay between every action, 50ms by default (eg `SLOW_MODE=true`, `SLOW_MODE=200ms`)                                                                                                              |
+| `KEPLR_VERSION`      | Keplr version to be installed                                                                                                                                                                            |
+| `SKIP_KEPLR_INSTALL` | Will skip installation of keplr wallet                                                                                                                                                                             |
+| `SKIP_EXTENSION_SETUP`   | Will skip initial setup of wallet                                                                                                                                                                           |
+
+These is a basic list of environment variables to be used. A more in depth list can be found [here](https://github.com/Synthetixio/synpress#-environmental-variables) 
 
 ## 📝 More resources
 
