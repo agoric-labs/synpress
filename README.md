@@ -123,6 +123,11 @@ For an example project, you can take a look at how we've set up tests in this [r
 
 These is a basic list of environment variables to be used. A more in depth list can be found [here](https://github.com/Synthetixio/synpress#-environmental-variables) 
 
-## 📝 More resources
+## 📄 Acknowledgments
 
-`@agoric/synpress` uses Synpress as its base and therefore supports most of its functionality. To learn more about command line options, usage examples, and CI/CD setup, you can use the original [README file](https://github.com/Synthetixio/synpress/blob/dev/README.md)
+Our package, `@agoric/synpress`, is an extension of [`@Synthetixio/synpress`](https://github.com/Synthetixio/synpress), a robust testing framework aimed at facilitating DApp testing through the MetaMask wallet. We've expanded its capabilities to also accommodate the Keplr wallet in addition to MetaMask, enhancing its versatility.
+The version of Synpress we forked, `@agoric/synpress`, corresponds to the v3 release. The original developers at Synthetixio are currently focusing on the v4 iteration of Synpress and are not incorporating any new modifications to v3. Consequently, our enhancements will remain exclusive to our fork and will not be merged back into the main project.
+
+## Further Reading
+
+Derived from Synpress, `@agoric/synpress` inherits much of its foundational functionality. For an in-depth understanding of the available command line options, practical usage cases, and guidance on setting up for continuous integration and deployment, we recommend consulting the original [README document](https://github.com/Synthetixio/synpress/blob/dev/README.md) provided by Synthetixio.
