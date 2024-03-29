@@ -119,7 +119,7 @@ const keplr = {
       playwright.keplrWindow(),
     );
 
-    const passPhraseArray = clipboardy.readSync().split(' ');
+    const mnemonicPhraseArray = clipboardy.readSync().split(' ');
     await playwright.waitAndClickByText(
       onboardingElements.nextButton,
       playwright.keplrWindow(),
@@ -138,7 +138,7 @@ const keplr = {
       const wordInputElement = wordLabel.locator('..').locator('input').first();
       await playwright.waitAndType(
         wordInputElement,
-        passPhraseArray[wordNumber],
+        mnemonicPhraseArray[wordNumber],
       );
     }
 
