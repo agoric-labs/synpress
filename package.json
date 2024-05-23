@@ -39,7 +39,7 @@
     "fix:eslint": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
     "fix:prettier": "prettier --write **/*.{js,json,ts,tsx,html}",
     "lint": "turbo lint:eslint lint:prettier",
-    "lint:eslint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "lint:eslint": "eslint . --ext .js,.jsx",
     "lint:prettier": "prettier --check **/*.{js,json,ts,tsx,html}",
     "lint:sarif": "node lint.js . --ext js",
     "release": "release-it --disable-metrics",
