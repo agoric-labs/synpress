@@ -37,7 +37,7 @@ if (process.env.SYNPRESS_LOCAL_TEST) {
 }
 
 // if user skips metamask install or setup
-if (!process.env.SKIP_METAMASK_INSTALL && !process.env.SKIP_EXTENSION_SETUP) {
+if (process.env.EXTENSION == 'metamask' && !process.env.SKIP_METAMASK_INSTALL) {
   // we don't want to check for presence of SECRET_WORDS or PRIVATE_KEY
   if (!process.env.SECRET_WORDS && !process.env.PRIVATE_KEY) {
     throw new Error(
