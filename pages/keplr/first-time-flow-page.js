@@ -1,6 +1,5 @@
 const createWalletButton = 'Create a new wallet';
 const existingWalletButton = 'Import an existing wallet';
-const importRecoveryPhraseButton = 'Import existing recovery phrase';
 const createNewRecoveryPhraseButton = 'Create new recovery phrase';
 const showMyPhraseButton = 'I understood. Show my phrase.';
 const copyToClipboardButton = 'Copy to clipboard';
@@ -24,7 +23,6 @@ const importButtonSelector = 'button:has-text("Import")';
 module.exports.onboardingElements = {
   existingWalletButton,
   createWalletButton,
-  importRecoveryPhraseButton,
   createNewRecoveryPhraseButton,
   showMyPhraseButton,
   copyToClipboardButton,

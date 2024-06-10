@@ -86,12 +86,11 @@ describe('Keplr', () => {
         'Offer accepted',
       );
     });
-    it(`should create a new wallet using 24 word phrase`, () => {
+    it(`should import a wallet and add selected chains`, () => {
       cy.setupWallet({
         secretWords:
           'orbit bench unit task food shock brand bracket domain regular warfare company announce wheel grape trust sphere boy doctor half guard ritual three ecology',
         password: 'Test1234',
-        newAccount: true,
         walletName: 'My Wallet 2',
         selectedChains: ['Agoric localhost', 'Secret Network'],
       }).then(setupFinished => {

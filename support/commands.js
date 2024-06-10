@@ -415,7 +415,6 @@ Cypress.Commands.add('setupWallet', (args = {}) => {
     secretWords,
     privateKey,
     password = 'Test1234',
-    newAccount = false,
     walletName = 'My Wallet',
     selectedChains = [],
     createNewWallet = false,
@@ -426,7 +425,6 @@ Cypress.Commands.add('setupWallet', (args = {}) => {
       privateKey ||
       'orbit bench unit task food shock brand bracket domain regular warfare company announce wheel grape trust sphere boy doctor half guard ritual three ecology',
     password,
-    newAccount,
     walletName,
     selectedChains,
     createNewWallet,

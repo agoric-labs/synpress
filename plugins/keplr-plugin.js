@@ -97,7 +97,6 @@ module.exports = (on, config) => {
     setupWallet: async ({
       secretWordsOrPrivateKey,
       password,
-      newAccount,
       walletName,
       selectedChains,
       createNewWallet,
@@ -105,7 +104,6 @@ module.exports = (on, config) => {
       await keplr.initialSetup(null, {
         secretWordsOrPrivateKey,
         password,
-        newAccount,
         walletName,
         selectedChains,
         createNewWallet,

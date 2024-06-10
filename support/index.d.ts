@@ -518,7 +518,6 @@ declare namespace Cypress {
       secretWords?: string;
       privateKey?: string;
       password?: string;
-      newAccount?: boolean;
       walletName?: string;
       selectedChains?: Array<string>;
       createNewWallet?: boolean;

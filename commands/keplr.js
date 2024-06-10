@@ -178,30 +178,19 @@ const keplr = {
   async importWallet(
     secretWordsOrPrivateKey,
     password,
-    newAccount,
     walletName,
     selectedChains,
   ) {
     await module.exports.goToRegistration();
     await playwright.waitAndClickByText(
-      newAccount
-        ? onboardingElements.createWalletButton
-        : onboardingElements.existingWalletButton,
+      onboardingElements.existingWalletButton,
       await playwright.keplrWindow(),
     );
 
     await playwright.waitAndClickByText(
-      newAccount
-        ? onboardingElements.importRecoveryPhraseButton
-        : onboardingElements.useRecoveryPhraseButton,
+      onboardingElements.useRecoveryPhraseButton,
       await playwright.keplrWindow(),
     );
-
-    newAccount &&
-      (await playwright.waitAndClickByText(
-        onboardingElements.useRecoveryPhraseButton,
-        await playwright.keplrWindow(),
-      ));
 
     if (secretWordsOrPrivateKey.includes(' ')) {
       await module.exports.importWalletWithPhrase(
@@ -377,7 +366,6 @@ const keplr = {
     {
       secretWordsOrPrivateKey,
       password,
-      newAccount,
       walletName,
       selectedChains,
       createNewWallet,
@@ -398,7 +386,6 @@ const keplr = {
       await module.exports.importWallet(
         secretWordsOrPrivateKey,
         password,
-        newAccount,
         walletName,
         selectedChains,
       );
