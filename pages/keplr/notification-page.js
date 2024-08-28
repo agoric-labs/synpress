@@ -1,4 +1,4 @@
-const approveButton = `button`;
+const approveButton = `//button[div[contains(text(), 'Approve')]]`;
 const copyAddress = 'Copy Address';
 const walletSelectors = chainName => `img[alt="${chainName}"]`;
 
