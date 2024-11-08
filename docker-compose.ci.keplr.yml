@@ -44,7 +44,20 @@ services:
       - ./docker/videos:/app/tests/e2e/videos
       - ./docker/screenshots:/app/tests/e2e/screenshots
     command: >
-      bash -c 'echo -n "======> local noVNC URL: http://localhost:8080/vnc.html?autoconnect=true " && pnpm wait-on http://display:8080 && echo -n "======> remote noVNC URL: " && curl -s ngrok:4040/api/tunnels | jq -r .tunnels[0].public_url && pnpm test:e2e:ci:keplr'
+      bash -c '
+        echo -n "======> local noVNC URL: http://localhost:8080/vnc.html?autoconnect=true " && 
+        pnpm wait-on http://display:8080 && 
+        echo -n "======> remote noVNC URL: " && 
+        curl -s ngrok:4040/api/tunnels | jq -r .tunnels[0].public_url && 
+
+        # Start development server and wait for it to be ready
+        VITE_RUN_ENV=agoric_chain pnpm start:ui & sleep 5 &&
+        
+        # start json server
+        pnpm start:json-server & sleep 5 &&
+
+        # Run end-to-end tests
+        pnpm synpress:run:keplr'
     networks:
       - x11
 

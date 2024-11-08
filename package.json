@@ -52,16 +52,7 @@
     "start:ui": "cd tools/ui && pnpm dev",
     "start:json-server": "json-server tools/json-server-db.json --port 3004",
     "synpress:run:metamask": "CYPRESS_SPEC_PATTERN=tests/e2e/specs/metamask/** EXTENSION=metamask SKIP_EXTENSION_SETUP=true SYNPRESS_LOCAL_TEST=true node synpress.js run --configFile=synpress.config.js",
-    "test:e2e:metamask": "start-server-and-test 'pnpm start:server' http-get://localhost:3000 'pnpm synpress:run:metamask'",
-    "test:e2e:anvil": "start-server-and-test 'turbo start:server' http-get://localhost:3000 'CYPRESS_USE_ANVIL=true pnpm synpress:run'",
-    "test:e2e:headless": "start-server-and-test 'turbo start:server' http-get://localhost:3000 'pnpm synpress:run --headless'",
-    "test:e2e:headless:anvil": "start-server-and-test 'turbo start:server' http-get://localhost:3000 'CYPRESS_USE_ANVIL=true pnpm synpress:run --headless'",
-    "test:e2e:ci": "start-server-and-test 'VITE_RUN_ENV=agoric_chain pnpm start:ui' http-get://localhost:3000 'pnpm start:json-server' http-get://localhost:3004 'pnpm synpress:run --record --group'",
-    "test:e2e:ci:keplr": "start-server-and-test 'VITE_RUN_ENV=agoric_chain pnpm start:ui' http-get://localhost:3000 'pnpm start:json-server' http-get://localhost:3004 'pnpm synpress:run:keplr'",
-    "test:e2e:ci:anvil": "start-server-and-test 'turbo start:server' http-get://localhost:3000 'CYPRESS_USE_ANVIL=true pnpm synpress:run --record --group'",
-    "test:e2e:ci:cypress-action": "CYPRESS_USE_ANVIL=true pnpm synpress:run",
     "synpress:run:keplr": "CYPRESS_SPEC_PATTERN=tests/e2e/specs/keplr/** EXTENSION=keplr SKIP_EXTENSION_SETUP=true SYNPRESS_LOCAL_TEST=true node synpress.js run --configFile=synpress.config.js",
-    "test:e2e:keplr": "start-server-and-test 'pnpm start:ui' http-get://localhost:3000 'pnpm start:json-server' http-get://localhost:3004 'pnpm synpress:run:keplr'",
     "prepare": "husky"
   },
   "dependencies": {
