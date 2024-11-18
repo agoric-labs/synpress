@@ -1,9 +1,16 @@
-name: Release Package
+name: Release @agoric/synpress
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'release: major|minor|patch'
+        required: true
+        default: patch
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
   release:
@@ -19,12 +26,11 @@ jobs:
         with:
           node-version: 18
 
-      - name: Authenticate with npm and show .npmrc
+      - name: Authenticate with npm
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          cat ~/.npmrc | sed 's/:_authToken=.*/:_authToken=[SECURED]/'
 
       - name: Install pnpm
         run: npm install -g pnpm
@@ -36,11 +42,9 @@ jobs:
         run: |
           git config --global user.name "${{ secrets.GIT_USER }}"
           git config --global user.email "${{ secrets.GIT_EMAIL }}"
-          echo "Configured Git user.name: $(git config --global user.name)"
-          echo "Configured Git user.email: $(git config --global user.email)"
 
       - name: Release with release-it
-        run: npx --ignore-existing release-it
+        run: npx release-it --increment ${{ github.event.inputs.version }}
         env:
           GIT_AUTHOR_NAME: ${{ secrets.GIT_USER }}
           GIT_AUTHOR_EMAIL: ${{ secrets.GIT_EMAIL }}
