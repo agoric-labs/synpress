@@ -1,6 +1,6 @@
 {
   "name": "@agoric/synpress",
-  "version": "3.8.3-beta.2",
+  "version": "3.8.3",
   "description": "Synpress is e2e testing framework based around Cypress.io & playwright with included MetaMask support. Test your dapps with ease.",
   "keywords": [
     "Synpress",
@@ -33,6 +33,17 @@
     "*.{json,js,ts,jsx,tsx,html}": [
       "prettier --write --ignore-unknown"
     ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "release: v${version}",
+      "tagName": "${version}",
+      "tagAnnotation": "Release v${version}",
+      "push": true
+    },
+    "github": {
+      "release": true
+    }
   },
   "scripts": {
     "fix": "turbo fix:eslint fix:prettier --concurrency 1",

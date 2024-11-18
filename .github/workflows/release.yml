@@ -1,8 +1,6 @@
-name: Release CI
+name: Release @agoric/synpress
 
 on:
-  push:
-    branches: [master]
   workflow_dispatch:
     inputs:
       version:
@@ -16,98 +14,39 @@ concurrency:
 
 jobs:
   release:
+    name: Publish to npm
     runs-on: ubuntu-latest
-    name: release
-
-    container:
-      image: synthetixio/docker-node:18.16-ubuntu
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # pin@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-          ref: master
+          node-version: 18
 
-      - name: Set pnpm cache directory
-        run: pnpm config set store-dir .pnpm-store
-        continue-on-error: true
+      - name: Authenticate with npm
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
-      - name: Setup cache
-        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # pin@v2
-        with:
-          path: |
-            .pnpm-store
-            node_modules
-          key: ${{ runner.os }}-pnpm-v1-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-v1-
-        continue-on-error: true
-
-      # fixes permission issues on docker
-      - name: Chown workspace
-        run: chown -R $(whoami) .
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      - name: Set git config
+      - name: Configure Git
         run: |
-          git config user.name $GIT_USER
-          git config user.email $GIT_EMAIL
-          mkdir -p ~/.gnupg/
-          printf $GPG_KEY | base64 -d > ~/.gnupg/private.key
-          gpg --import ~/.gnupg/private.key
-          git config commit.gpgsign true
-          git config user.signingkey $GIT_SIGNING_KEY
-        env:
-          GIT_USER: ${{ secrets.GIT_USER }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GIT_SIGNING_KEY: ${{ secrets.GIT_SIGNING_KEY }}
+          git config --global user.name "${{ secrets.GIT_USER }}"
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
 
-      - name: Set pnpm config
-        run: pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+      - name: Release with release-it
+        run: npx release-it --increment ${{ github.event.inputs.version }}
         env:
+          GIT_AUTHOR_NAME: ${{ secrets.GIT_USER }}
+          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_EMAIL }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Set current pnpm package version
-        id: extract-version
-        run: |
-          PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
-          echo ::set-output name=current-version::$PACKAGE_VERSION
-
-      - name: Release ${{ github.event.inputs.version }}
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          git reset --hard
-          pnpm release:${{ github.event.inputs.version }} --ci
-          pnpm publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GIT_USER: ${{ secrets.GIT_USER }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GIT_SIGNING_KEY: ${{ secrets.GIT_SIGNING_KEY }}
-
-      - name: Release patch:beta
-        if: github.event_name == 'push'
-        run: |
-          git reset --hard
-
-          echo ${{ steps.extract-version.outputs.current-version }}
-          if echo ${{ steps.extract-version.outputs.current-version }} | grep -q "beta"; then
-            pnpm release --ci --preRelease
-            pnpm publish
-          else
-            pnpm release:patch --ci --preRelease=beta
-            pnpm publish
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GIT_USER: ${{ secrets.GIT_USER }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          GPG_KEY: ${{ secrets.GPG_KEY }}
-          GIT_SIGNING_KEY: ${{ secrets.GIT_SIGNING_KEY }}
