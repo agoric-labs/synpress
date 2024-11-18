@@ -52,6 +52,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
+      - name: Authenticate with npm
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
       - name: Set git config
         run: |
           git config user.name $GIT_USER
@@ -66,11 +71,6 @@ jobs:
           GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           GPG_KEY: ${{ secrets.GPG_KEY }}
           GIT_SIGNING_KEY: ${{ secrets.GIT_SIGNING_KEY }}
-
-      - name: Set pnpm config
-        run: pnpm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Set current pnpm package version
         id: extract-version
@@ -98,11 +98,11 @@ jobs:
 
           echo ${{ steps.extract-version.outputs.current-version }}
           if echo ${{ steps.extract-version.outputs.current-version }} | grep -q "beta"; then
-            pnpm release --ci --preRelease
-            pnpm publish
+            npm run release -- --ci --preRelease
+            npm publish
           else
-            pnpm release:patch --ci --preRelease=beta
-            pnpm publish
+            npm run release:patch -- --ci --preRelease=beta
+            npm publish
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
