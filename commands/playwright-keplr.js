@@ -131,7 +131,7 @@ module.exports = {
 
       extensionsData[extensionName] = {
         version: extensionVersion,
-        id: extensionId,
+        id: extensionId.trim(),
       };
     }
     await page.close();
@@ -149,7 +149,7 @@ module.exports = {
       } else if (
         page
           .url()
-          .includes(`chrome-extension://${keplrExtensionData.id.trim()}/register.html`)
+          .includes(`chrome-extension://${keplrExtensionData.id}/register.html`)
       ) {
         keplrWindow = page;
       }
