@@ -435,6 +435,10 @@ Cypress.Commands.add('acceptAccess', () => {
   return cy.task('acceptAccess');
 });
 
+Cypress.Commands.add('acceptAccessWithoutWaitForEvent', () => {
+  return cy.task('acceptAccessWithoutWaitForEvent');
+});
+
 Cypress.Commands.add('rejectAccess', () => {
   return cy.task('rejectAccess');
 });

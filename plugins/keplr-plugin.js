@@ -89,6 +89,7 @@ module.exports = (on, config) => {
     // keplr commands
     importWallet: keplr.importWallet,
     acceptAccess: keplr.acceptAccess,
+    acceptAccessWithoutWaitForEvent: keplr.acceptAccessWithoutWaitForEvent,
     rejectAccess: keplr.rejectAccess,
     getWalletAddress: keplr.getWalletAddress,
     confirmTransaction: keplr.confirmTransaction,
