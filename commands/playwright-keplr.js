@@ -116,7 +116,9 @@ module.exports = {
           .locator('#name-and-version')
           .locator('#name')
           .textContent()
-      ).toLowerCase();
+      )
+        .toLowerCase()
+        .trim();
 
       const extensionVersion = (
         await extensionData
@@ -130,7 +132,7 @@ module.exports = {
       ).replace('ID: ', '');
 
       extensionsData[extensionName] = {
-        version: extensionVersion,
+        version: extensionVersion.trim(),
         id: extensionId.trim(),
       };
     }
