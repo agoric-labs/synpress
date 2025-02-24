@@ -317,6 +317,15 @@ const keplr = {
     return true;
   },
 
+  async acceptAccessWithoutWaitForEvent() {
+    const notificationPage = await playwright.switchToKeplrNotification();
+    await playwright.waitAndClick(
+      notificationPageElements.approveButton,
+      notificationPage,
+    );
+    return true;
+  },
+
   async rejectAccess() {
     const notificationPage = await playwright.switchToKeplrNotification();
     await notificationPage.close();
